@@ -40,16 +40,29 @@
           );
         };
 
-        const AddForm = () => {
+        const AddForm = (props) => {
           const [title, setTitle] = React.useState("");
+          const inputRef = React.useRef(null);
 
           const handleTextChange = (e) => {
             setTitle(e.currentTarget.value);
           };
 
+          const handleSubmit = (e) => {
+            e.preventDefault();
+            props.onSubmit(title);
+            setTitle("");
+            inputRef.current.focus();
+          };
+
           return (
-            <form>
-              <input type="text" value={title} onChange={handleTextChange} />
+            <form onSubmit={handleSubmit}>
+              <input
+                type="text"
+                value={title}
+                onChange={handleTextChange}
+                ref={inputRef}
+              />
               <button>Add</button>
             </form>
           );
@@ -112,7 +125,7 @@
                 <button id="purge">Purge</button>
               </h1>
               <ul id="todos">{todoItems}</ul>
-              <AddForm />
+              <AddForm onSubmit={handleAddFormSubmit} />
             </>
           );
         };
