@@ -75,6 +75,16 @@
             { id: 2, title: "ccc", isCompleted: false },
           ]);
 
+          const handlePurgeClick = () => {
+            if (!confirm("Sure?")) {
+              return;
+            }
+            const newTodos = todos.filter((todo) => {
+              return todo.isCompleted === false;
+            });
+            setTodos(newTodos);
+          };
+
           const handleAddFormSubmit = (title) => {
             const newTodos = [...todos];
             newTodos.push({
@@ -98,7 +108,7 @@
           };
 
           const handleTodoDeleteClick = (id) => {
-            if (!cofirm("Sure?")) {
+            if (!confirm("Sure?")) {
               return;
             }
             const newTodos = todos.filter((todo) => {
@@ -122,7 +132,7 @@
             <>
               <h1>
                 Todos
-                <button id="purge">Purge</button>
+                <button onClick={handlePurgeClick}>Purge</button>
               </h1>
               <ul id="todos">{todoItems}</ul>
               <AddForm onSubmit={handleAddFormSubmit} />
